@@ -27,11 +27,10 @@ def main():
 
         # Write your code here !
         result=""
-        BOARD_ROWS = 6
-        BOARD_COLUMNS = 7
+        
 
-        for row in range(BOARD_ROWS):
-            for column in range(BOARD_COLUMNS):
+        for row in range(Board.BOARD_COLUMNS):
+            for column in range(Board.BOARD_COLUMNS):
                 if Board.hasDiskOnCell(boardUpdates, row, column):
                     character = "R "
         
@@ -45,3 +44,4 @@ def main():
 
 
 main()
+
