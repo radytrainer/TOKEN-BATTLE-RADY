@@ -1,13 +1,13 @@
+import Board
 
-def insertGrid(grid, rowIndex, colIndex, sign):
+def insertGrid(grid, colIndex, sign):
     lastIndex = len(grid) - 1
-    for row in range(len(grid)):
-        for col in range(len(grid[row])):
-          if grid[rowIndex][colIndex] == 0:
-                grid[rowIndex][colIndex] = sign
-          else:
-              lastIndex -= 1
-              
+    added = False
+    for i in range(len(grid)):
+        if grid[lastIndex - i][colIndex] == 0 and colIndex < Board.COL_GRID and not added:
+            grid[lastIndex - i][colIndex] = sign
+            added = True    
+               
     return grid 
 
 
