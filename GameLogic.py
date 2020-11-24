@@ -58,15 +58,29 @@ def diskOnRow(diskList, rowIndex, disk):
 
 
 def diskOnColumn(diskList, columunIndex, disk):
-    countDisk = 0
-    if columunIndex < Board.COL_GRID:
-        for row in range(len(diskList)):
-            if diskList[row][columunIndex] == disk.upper():
-                countDisk += 1
-    if countDisk == 4:
-        whoWinner(disk.upper(), countDisk)
-        return True
-    return False
+    countDiskRed = 0
+    countDiskYellow = 0
+    letterR = []
+    letterY = []
+    for row in range(len(diskList)):
+        if diskList[row][columunIndex] == "R":
+            letterR.append(row)
+        elif diskList[row][columunIndex] == "Y":
+            letterY.append(row)
 
+    if len(letterR) > 0:
+        countDiskRed = counter(letterR) 
+    if len(letterY) > 0:
+        countDiskYellow = counter(letterY)
+
+    if countDiskRed >= 4:
+        whoWinner(disk.upper(), countDiskRed)
+        return True
+
+    elif countDiskYellow >= 4:
+        whoWinner(disk.upper(), countDiskYellow)
+        return True
+    else:
+        return False
 
     

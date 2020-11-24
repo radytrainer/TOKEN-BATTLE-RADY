@@ -10,26 +10,30 @@ def counter(listIndex):
             firstIndex = listIndex[i]
     return count 
 
-def diskOnRow(diskList, rowIndex, disk):
+
+
+def diskOnColumn(diskList, columunIndex, disk):
     countDiskRed = 0
     countDiskYellow = 0
     letterR = []
     letterY = []
-    for column in range(len(diskList) + 1):
-        if diskList[rowIndex][column] == "R":
-            letterR.append(column)
-        elif diskList[rowIndex][column] == "Y":
-            letterY.append(column)
+    for row in range(len(diskList)):
+        if diskList[row][columunIndex] == "R":
+            letterR.append(row)
+        elif diskList[row][columunIndex] == "Y":
+            letterY.append(row)
 
-    countDiskRed = counter(letterR) 
-    countDiskYellow = counter(letterY)
+    if len(letterR) > 0:
+        countDiskRed = counter(letterR) 
+    if len(letterY) > 0:
+        countDiskYellow = counter(letterY)
 
-    print(letterR)
-    if countDiskRed == 4:
+    print(letterY)
+    if countDiskRed >= 4:
        # whoWinner(disk.upper(), countDiskRed)
         return True
 
-    elif countDiskYellow == 4:
+    elif countDiskYellow >= 4:
         #whoWinner(disk.upper(), countDiskYellow)
         return True
     else:
@@ -37,12 +41,12 @@ def diskOnRow(diskList, rowIndex, disk):
 
 data = [
     ["Y", "Y", "Y", "R", "R", "R", "R"],
-    [0, 0, 0, 0, 0, 0, 0],
-    [0, "R", 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0],
-    [0, "Y", "Y", "R", "R", "R", "R"]
+    ["Y", 0, 0, 0, 0, 0, 0],
+    ["R", "R", 0, 0, 0, 0, 0],
+    ["R", 0, 0, 0, 0, 0, 0],
+    ["R", 0, 0, 0, 0, 0, 0],
+    ["R", "Y", "Y", "R", "R", "R", "R"]
 ]
 
-print(diskOnRow(data, 5, "R"))
+print(diskOnColumn(data, 0, "R"))
 
