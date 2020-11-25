@@ -1,8 +1,24 @@
-import Board
 import GameLogic
 
+
+def getColumnInput(letter):
+    if letter.upper == "A":
+        columnIndex = 0
+    elif letter.upper == "B":
+        columnIndex = 1
+    elif letter.upper == "C":
+        columnIndex = 2
+    elif letter.upper == "D":
+        columnIndex = 3
+    elif letter.upper == "E":
+        columnIndex = 4
+    elif letter.upper == "F":
+        columnIndex = 5
+    elif letter.upper == "G":
+        columnIndex = 6
+
 def printBoard():
-    rows = ""
+    rows = "A B C D E F G \n"
     for row in range(len(Board.database)):
         for col in range(len(Board.database[row])):
             rows += str(Board.database[row][col]) + " "
