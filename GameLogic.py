@@ -20,16 +20,14 @@ def createBoard() :
     for row in range(ROW_GRID):
         result.append([])
 
-    for row in range(len(database)):
+    for row in range(len(result)):
         for col in range(COL_GRID):
             result[row].append("0")
 
     return result
 
 
-
 board = createBoard()
-
 currentPlayer  = RED_PLAYER
 
 
@@ -43,7 +41,6 @@ def switchPlayer() :
 
 
 
-
 #
 # Reset the board with no disks
 #
@@ -53,9 +50,16 @@ def resetBoard() :
 
 
 # @param  column : the column index
-# @return  the mrow index to drop the disk or -1 if the column is full
+# @return  the row index to drop the disk or -1 if the column is full
 def getRowIndexFor(column) :
-    return 0   # TODO
+    indexOf = -1
+    for index in range(len(board)):
+        if board[index][column] == "0":
+            indexOf = index
+    if indexOf >= 0:
+        return indexOf
+    return -1
+
 
 # @param  column : the column index
 # @return  True if it s possible to drop a disk on column
@@ -83,6 +87,7 @@ def play(column):
 
 
 def isBoardFull():
+    
     return False # TODO
 
 def isSignWOn(sign) :
@@ -117,7 +122,7 @@ def getMaximunConsecutiveNumbers(numbers):
 
             if  currentValue == previousValue  + 1 :
                 count += 1
-            else 
+            else: 
                 count = 0
 
     return count 
@@ -134,8 +139,8 @@ def isSignWonOnRow(rowIndex, sign):
     # @ - Count the max list of consecutive index
     mqxCOnsecutive = getMaximunConsecutiveNumbers(signIndexes)
 
-    t# Sign has won is more than 4 consecutive index
-    return mqxCOnsecutive> = 4
+    # Sign has won is more than 4 consecutive index
+    return mqxCOnsecutive >= 4
 
    
 
