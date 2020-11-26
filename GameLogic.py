@@ -6,6 +6,7 @@ COL_GRID = 7
 RED_PLAYER = "RED_PLAYER"
 YELLOW_PLAYER = "YELLOW_PLAYER"
 
+# Status
 RED_WON = "RED_WON"
 YELLOW_WON= "YELLOW_WON"
 BOARD_FULL = "BOARD_FULL"
@@ -97,82 +98,80 @@ def isBoardFull():
     return True
 
 
-def isSignWOn(sign) :
+def isSignWon(sign) :
+    
     return False
 
 
 
 # @return the status of the board (red winm yellow winm on going etc..)
 def getBoardStatus() :
-
+    status = ""
     # 1 Check if board if full
     boardFull = isBoardFull()
 
-    # 2 Check if YELLOW  won
-    yelloWon = isSignWOn("Y")
+     # 2 Check if YELLOW  won
+    yellowWon = isSignWOn("Y")
 
     # 3 Check if RED won
+    redWon = isSignWon("R")
 
-    return ON_GOING     # TODO
+    if boardFull:
+        status = BOARD_FULL
+    elif yellowWon:
+        status = YELLOW_WON
+    elif redWon:
+        status = RED_WON
+    else:
+        status = ON_GOING
+   
+    return status   
 
 #
 # @papram list of numbers
 # Count the  maximun consecutive list of numbers
 #
 def getMaximunConsecutiveNumbers(numbers):
-    count = 0
-
+    count = 1
     if len(numbers)> 0 :
         for i in range(1, len(numbers)):
             currentValue = numbers[i] 
             previousValue = numbers[i-1]
 
-            if  currentValue == previousValue  + 1 :
+            if  currentValue == previousValue  + 1:
                 count += 1
-            else: 
-                count = 0
-
-    return count 
+                if count >= 4:
+                    return count
+            else:
+                count = 1
+    return count
 
 
 def isSignWonOnRow(rowIndex, sign):
 
     #  1 - Get the indexes for this sign
     signIndexes = []
-    for column in range(len(board) + 1):
-        if board[rowIndex][column] ==sign:
-            signINdexes.append(column)
+    for column in range(len(board)):
+        if board[rowIndex][column] == sign:
+            signIndexes.append(column)
 
     # @ - Count the max list of consecutive index
-    mqxCOnsecutive = getMaximunConsecutiveNumbers(signIndexes)
+    maxCOnsecutive = getMaximunConsecutiveNumbers(signIndexes)
 
     # Sign has won is more than 4 consecutive index
-    return mqxCOnsecutive >= 4
+    return maxCOnsecutive >= 4
 
    
 
-def diskOnColumn(diskList, columunIndex, disk):
-    countDiskRed = 0
-    countDiskYellow = 0
-    letterR = []
-    letterY = []
-    for row in range(len(diskList)):
-        if diskList[row][columunIndex] == "R":
-            letterR.append(row)
-        elif diskList[row][columunIndex] == "Y":
-            letterY.append(row)
+def isSignWonOnColumn(columunIndex, sign):
+    #  1 - Get the indexes for this sign
+    signIndexes = []
+    for row in range(len(board)):
+        if board[row][columunIndex] == sign:
+            signIndexes.append(row)
 
-    if len(letterR) > 0:
-        countDiskRed = counter(letterR) 
-    if len(letterY) > 0:
-        countDiskYellow = counter(letterY)
+    # @ - Count the max list of consecutive index
+    maxCOnsecutive = getMaximunConsecutiveNumbers(signIndexes)
 
-    if countDiskRed >= 4:
-        whoWinner(disk.upper(), countDiskRed)
-        return True
-
-    elif countDiskYellow >= 4:
-        whoWinner(disk.upper(), countDiskYellow)
-        return True
-    else:
-        return False
+    # Sign has won is more than 4 consecutive index
+    return maxCOnsecutive >= 4
