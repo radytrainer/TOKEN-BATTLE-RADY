@@ -96,37 +96,6 @@ def isBoardFull():
     if counter > 0:
         return False 
     return True
-
-
-def isSignWon(sign) :
-    
-    return False
-
-
-
-# @return the status of the board (red winm yellow winm on going etc..)
-def getBoardStatus() :
-    status = ""
-    # 1 Check if board if full
-    boardFull = isBoardFull()
-
-     # 2 Check if YELLOW  won
-    yellowWon = isSignWOn("Y")
-
-    # 3 Check if RED won
-    redWon = isSignWon("R")
-
-    if boardFull:
-        status = BOARD_FULL
-    elif yellowWon:
-        status = YELLOW_WON
-    elif redWon:
-        status = RED_WON
-    else:
-        status = ON_GOING
-   
-    return status   
-
 #
 # @papram list of numbers
 # Count the  maximun consecutive list of numbers
@@ -175,3 +144,41 @@ def isSignWonOnColumn(columunIndex, sign):
 
     # Sign has won is more than 4 consecutive index
     return maxCOnsecutive >= 4
+
+def isSignWon(sign) :
+    
+    for row in range(len(board)):
+        if isSignWonOnRow(row,sign):
+            return True
+    for row in range(len(board)):
+        for col in range(len(board[row])):
+            if isSignWonOnColumn(col,sign):
+                return True
+    return False
+
+
+
+# @return the status of the board (red winm yellow winm on going etc..)
+def getBoardStatus() :
+    status = ""
+    # 1 Check if board if full
+    boardFull = isBoardFull()
+
+     # 2 Check if YELLOW  won
+    yellowWon = isSignWon("Y")
+
+    # 3 Check if RED won
+    redWon = isSignWon("R")
+
+    if boardFull:
+        status = BOARD_FULL
+    elif yellowWon:
+        status = YELLOW_WON
+    elif redWon:
+        status = RED_WON
+    else:
+        status = ON_GOING
+   
+    return status   
+print(getBoardStatus())
+
