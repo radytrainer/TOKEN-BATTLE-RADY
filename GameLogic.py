@@ -87,8 +87,15 @@ def play(column):
 
 
 def isBoardFull():
-    
-    return False # TODO
+    counter = 0
+    for row in range(len(board)):
+        for col in range(len(board[row])):
+            if board[row][col] == "0":
+                counter += 1
+    if counter > 0:
+        return False 
+    return True
+
 
 def isSignWOn(sign) :
     return False

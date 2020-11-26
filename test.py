@@ -1,19 +1,20 @@
 board = [
-    ["0", "R", "0", "0", "0"],
-    ["0", "R", "0", "0", "0"],
-    ["0", "R", "0", "0", "0"],
-    ["R", "R", "0", "0", "0"],
-    ["R", "R", "0", "0", "0"],
+    ["R", "Y", "R", "R", "R"], 
+    ["R", "R", "R", "R", "R"], 
+    ["R", "R", "R", "R", "R"], 
+    ["R", "R", "R", "R", "R"], 
+    ["R", "R", "R", "R", "R"]
 ]
 
-def getRowIndexFor(column) :
-    indexOf = -1
-    for index in range(len(board)):
-        if board[index][column] == "0":
-            indexOf = index
-    if indexOf >= 0:
-        return indexOf
-    return -1
+def isBoardFull():
+    counter = 0
+    for row in range(len(board)):
+        for col in range(len(board[row])):
+            if board[row][col] == "0":
+                counter += 1
+    if counter > 0:
+        return False 
+    return True
 
-print(getRowIndexFor(1))
+print(isBoardFull())
 
