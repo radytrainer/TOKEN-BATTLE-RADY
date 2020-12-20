@@ -1,39 +1,37 @@
-import GameLogic
+import GameLogic as logic
 
-
-def getColumnInput(letter):
-    if letter.upper == "A":
-        columnIndex = 0
-    elif letter.upper == "B":
-        columnIndex = 1
-    elif letter.upper == "C":
-        columnIndex = 2
-    elif letter.upper == "D":
-        columnIndex = 3
-    elif letter.upper == "E":
-        columnIndex = 4
-    elif letter.upper == "F":
-        columnIndex = 5
-    elif letter.upper == "G":
-        columnIndex = 6
 
 def printBoard():
-    rows = "A B C D E F G \n"
-    for row in range(len(Board.database)):
-        for col in range(len(Board.database[row])):
-            rows += str(Board.database[row][col]) + " "
+    rows = ""
+    for row in range(len(logic.board)):
+        for col in range(len(logic.board[row])):
+            rows += str(logic.board[row][col]) + " "
         rows += "\n"
     print(rows)
 
-
-isWon = True 
-while isWon:
-    col = int(input("Col: "))
-    sign = str(input("Sign (R/Y): "))
-
-    GameLogic.insertGrid(col, sign.upper())
+while logic.getBoardStatus() == logic.ON_GOING:
     printBoard()
 
-    if GameLogic.diskOnRow(Board.database, len(Board.database) - 1, sign) or GameLogic.diskOnColumn(Board.database, col, sign):
-        isWon = False 
+   # Get current player
+    currentPlay = logic.switchPlayer()
+
+    #Get Column index
+    columunIndex = int(input(currentPlay + " Enter your column: "))
+
+    if logic.isBoardColumFull(columunIndex):
+        print("This column are full try other column!")
+
+    #Check if can play on the column
+    if logic.canPlay(columunIndex):
+        logic.play(columunIndex)
     
+    
+    
+
+if logic.getBoardStatus() == logic.YELLOW_WON:
+    print("YELLOW PLAER IS WINNER")
+elif logic.getBoardStatus() == logic.RED_WON:
+    print("RED PLAYER IS WINNER")
+else:
+    print("BOARD FULL")
+

@@ -84,7 +84,7 @@ def play(column):
     board[row][column] = sign
 
     # Siztch player
-    switchPlayer() 
+    # switchPlayer() 
 
 
 def isBoardFull():
@@ -170,15 +170,25 @@ def getBoardStatus() :
     # 3 Check if RED won
     redWon = isSignWon("R")
 
-    if boardFull:
-        status = BOARD_FULL
-    elif yellowWon:
+    if yellowWon:
         status = YELLOW_WON
     elif redWon:
         status = RED_WON
+    elif boardFull:
+        status = BOARD_FULL
     else:
         status = ON_GOING
    
     return status   
-print(getBoardStatus())
+ 
+
+# @return true if column is full with sign
+def isBoardColumFull(columunIndex):
+    counter = 0
+    for row in range(len(board)):
+        if board[row][columunIndex] == "0":
+            counter += 1
+    if counter > 0:
+        return False 
+    return True
 
