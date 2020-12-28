@@ -20,11 +20,11 @@ def printBoard():
     for i in range(0, logic.ROW_GRID):
         for j in range(0, logic.COL_GRID):
             if  logic.board[i][j] == "R": 
-
-                arcade.draw_circle_filled(i * (SQUARE_SIZE + MARGIN) + OFFSET_X, j* (SQUARE_SIZE + MARGIN) + OFFSET_y, SQUARE_SIZE,arcade.color.YELLOW)
-            elif logic.board[i][j] == "Y":
-
                 arcade.draw_circle_filled(i * (SQUARE_SIZE + MARGIN) + OFFSET_X, j* (SQUARE_SIZE + MARGIN) + OFFSET_y, SQUARE_SIZE,arcade.color.RED)
+
+            elif logic.board[i][j] == "Y":
+                arcade.draw_circle_filled(i * (SQUARE_SIZE + MARGIN) + OFFSET_X, j* (SQUARE_SIZE + MARGIN) + OFFSET_y, SQUARE_SIZE,arcade.color.YELLOW)
+
             else:
                 arcade.draw_circle_outline(i * (SQUARE_SIZE + MARGIN) + OFFSET_X,j* (SQUARE_SIZE + MARGIN) + OFFSET_y, SQUARE_SIZE, arcade.color.BLACK, LINE_WEIGHT)
 
@@ -51,7 +51,7 @@ class MyGame(arcade.Window):
         columunIndex = int((x - MARGIN) / (SQUARE_SIZE + MARGIN))
         rowIndex = int((y - MARGIN) / (SQUARE_SIZE + MARGIN))
         
-       # currentPlay = logic.switchPlayer()
+        currentPlay = logic.switchPlayer()
         if logic.canPlay(columunIndex):
             logic.play(columunIndex)
     
