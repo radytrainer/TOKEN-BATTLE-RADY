@@ -9,29 +9,27 @@ def printBoard():
         rows += "\n"
     print(rows)
 
+
 while logic.getBoardStatus() == logic.ON_GOING:
     printBoard()
 
    # Get current player
-    currentPlay = logic.switchPlayer()
+    currentPlay = logic.currentPlayer
 
-    #Get Column index
+    # Get Column index
     columunIndex = int(input(currentPlay + " Enter your column: "))
 
-    if logic.isBoardColumFull(columunIndex):
-        print("This column are full try other column!")
-
-    #Check if can play on the column
+    # Check if can play on the column
     if logic.canPlay(columunIndex):
         logic.play(columunIndex)
-    
-    
-    
+    else:
+        print("This column is full try other column!")
 
-if logic.getBoardStatus() == logic.YELLOW_WON:
+
+lastStatus = logic.getBoardStatus()
+if lastStatus == logic.YELLOW_WON:
     print("YELLOW PLAER IS WINNER")
-elif logic.getBoardStatus() == logic.RED_WON:
+elif lastStatus == logic.RED_WON:
     print("RED PLAYER IS WINNER")
 else:
     print("BOARD FULL")
-

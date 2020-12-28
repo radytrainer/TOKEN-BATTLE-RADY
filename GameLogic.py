@@ -8,7 +8,7 @@ YELLOW_PLAYER = "YELLOW_PLAYER"
 
 # Status
 RED_WON = "RED_WON"
-YELLOW_WON= "YELLOW_WON"
+YELLOW_WON = "YELLOW_WON"
 BOARD_FULL = "BOARD_FULL"
 ON_GOING = "ON_GOING"
 
@@ -16,7 +16,7 @@ ON_GOING = "ON_GOING"
 #  empty  cell = "0"
 #  red  cell = "Y"
 #  yellow   cell = "R"
-def createBoard() :
+def createBoard():
     result = []
     for row in range(ROW_GRID):
         result.append([])
@@ -25,34 +25,34 @@ def createBoard() :
         for col in range(COL_GRID):
             result[row].append("0")
 
+    result[0][ROW_GRID-1] = "R"
     return result
 
 
 board = createBoard()
-currentPlayer  = RED_PLAYER
+currentPlayer = RED_PLAYER
 
 
-def switchPlayer() :
+def switchPlayer():
     global currentPlayer
 
-    if currentPlayer ==  RED_PLAYER:
+    if currentPlayer == RED_PLAYER:
         currentPlayer = YELLOW_PLAYER
-    else :
+    else:
         currentPlayer = RED_PLAYER
-
 
 
 #
 # Reset the board with no disks
 #
-def resetBoard() :
+def resetBoard():
     global board
     board = createBoard()
 
 
 # @param  column : the column index
 # @return  the row index to drop the disk or -1 if the column is full
-def getRowIndexFor(column) :
+def getRowIndexFor(column):
     indexOf = -1
     for index in range(len(board)):
         if board[index][column] == "0":
@@ -65,7 +65,7 @@ def getRowIndexFor(column) :
 # @param  column : the column index
 # @return  True if it s possible to drop a disk on column
 def canPlay(column):
-    return  getRowIndexFor(column) != -1
+    return getRowIndexFor(column) != -1
 
 
 def play(column):
@@ -75,16 +75,16 @@ def play(column):
     row = getRowIndexFor(column)
 
     # Get the sign for currentplayer
-    if currentPlayer ==  RED_PLAYER:
+    if currentPlayer == RED_PLAYER:
         sign = "R"
-    else :
+    else:
         sign = "Y"
 
     # UPdate  the board
     board[row][column] = sign
 
     # Siztch player
-    # switchPlayer() 
+    switchPlayer()
 
 
 def isBoardFull():
@@ -94,20 +94,22 @@ def isBoardFull():
             if board[row][col] == "0":
                 counter += 1
     if counter > 0:
-        return False 
+        return False
     return True
 #
 # @papram list of numbers
 # Count the  maximun consecutive list of numbers
 #
+
+
 def getMaximunConsecutiveNumbers(numbers):
     count = 1
-    if len(numbers)> 0 :
+    if len(numbers) > 0:
         for i in range(1, len(numbers)):
-            currentValue = numbers[i] 
+            currentValue = numbers[i]
             previousValue = numbers[i-1]
 
-            if  currentValue == previousValue  + 1:
+            if currentValue == previousValue + 1:
                 count += 1
                 if count >= 4:
                     return count
@@ -130,7 +132,6 @@ def isSignWonOnRow(rowIndex, sign):
     # Sign has won is more than 4 consecutive index
     return maxCOnsecutive >= 4
 
-   
 
 def isSignWonOnColumn(columunIndex, sign):
     #  1 - Get the indexes for this sign
@@ -145,50 +146,33 @@ def isSignWonOnColumn(columunIndex, sign):
     # Sign has won is more than 4 consecutive index
     return maxCOnsecutive >= 4
 
-def isSignWon(sign) :
-    
+
+def isSignWon(sign):
+
     for row in range(len(board)):
-        if isSignWonOnRow(row,sign):
+        if isSignWonOnRow(row, sign):
             return True
     for row in range(len(board)):
         for col in range(len(board[row])):
-            if isSignWonOnColumn(col,sign):
+            if isSignWonOnColumn(col, sign):
                 return True
     return False
 
 
-
 # @return the status of the board (red winm yellow winm on going etc..)
-def getBoardStatus() :
+def getBoardStatus():
     status = ""
-    # 1 Check if board if full
-    boardFull = isBoardFull()
 
-     # 2 Check if YELLOW  won
-    yellowWon = isSignWon("Y")
-
-    # 3 Check if RED won
-    redWon = isSignWon("R")
-
-    if yellowWon:
+    if isSignWon("Y"):
         status = YELLOW_WON
-    elif redWon:
+
+    elif isSignWon("R"):
         status = RED_WON
-    elif boardFull:
+
+    elif isBoardFull():
         status = BOARD_FULL
+
     else:
         status = ON_GOING
-   
-    return status   
- 
 
-# @return true if column is full with sign
-def isBoardColumFull(columunIndex):
-    counter = 0
-    for row in range(len(board)):
-        if board[row][columunIndex] == "0":
-            counter += 1
-    if counter > 0:
-        return False 
-    return True
-
+    return status

@@ -1,6 +1,6 @@
 
 import arcade
-import GameLogic as logic 
+import GameLogic as logic
 
 
 SQUARE_SIZE = 30
@@ -13,20 +13,23 @@ LINE_WEIGHT = 2
 OFFSET_X = 100
 OFFSET_y = 70
 
-currentPlay = logic.currentPlayer
 
 # Print Board Circle
+
+
 def printBoard():
     for i in range(0, logic.ROW_GRID):
         for j in range(0, logic.COL_GRID):
-            if  logic.board[i][j] == "R": 
-                arcade.draw_circle_filled(i * (SQUARE_SIZE + MARGIN) + OFFSET_X, j* (SQUARE_SIZE + MARGIN) + OFFSET_y, SQUARE_SIZE,arcade.color.RED)
+            if logic.board[i][j] == "R":
+                arcade.draw_circle_filled(i * (SQUARE_SIZE + MARGIN) + OFFSET_X, j * (
+                    SQUARE_SIZE + MARGIN) + OFFSET_y, SQUARE_SIZE, arcade.color.RED)
 
             elif logic.board[i][j] == "Y":
-                arcade.draw_circle_filled(i * (SQUARE_SIZE + MARGIN) + OFFSET_X, j* (SQUARE_SIZE + MARGIN) + OFFSET_y, SQUARE_SIZE,arcade.color.YELLOW)
+                arcade.draw_circle_filled(i * (SQUARE_SIZE + MARGIN) + OFFSET_X, j * (
+                    SQUARE_SIZE + MARGIN) + OFFSET_y, SQUARE_SIZE, arcade.color.YELLOW)
 
-            else:
-                arcade.draw_circle_outline(i * (SQUARE_SIZE + MARGIN) + OFFSET_X,j* (SQUARE_SIZE + MARGIN) + OFFSET_y, SQUARE_SIZE, arcade.color.BLACK, LINE_WEIGHT)
+            arcade.draw_circle_outline(i * (SQUARE_SIZE + MARGIN) + OFFSET_X, j * (
+                SQUARE_SIZE + MARGIN) + OFFSET_y, SQUARE_SIZE, arcade.color.BLACK, LINE_WEIGHT)
 
 
 class MyGame(arcade.Window):
@@ -38,28 +41,31 @@ class MyGame(arcade.Window):
     def on_draw(self):
         # Rendering
         arcade.start_render()
-        print("update")
+
         # Print board
         printBoard()
-        arcade.draw_text(currentPlay,50, 10, arcade.color.BLACK, 14)
-         
-          
+        
+        if logic.getBoardStatus() == logic.RED_WON:
+            arcade.draw_text("Red Win", 50, 10, arcade.color.BLACK, 14)
+        elif logic.getBoardStatus() == logic.YELLOW_WON:
+            arcade.draw_text("Yellow Win", 50, 10, arcade.color.BLACK, 14)
+        else:
+            arcade.draw_text(logic.currentPlayer, 50, 10, arcade.color.BLACK, 14)
+           
+
     def on_mouse_press(self, x, y, button, modifiers):
         # Called when the user presses a mouse button.
-        #print("Click at coordinates:" + str(x) + "," + str(y))
-        #print("Index:" + str(int( (x - MARGIN) / (SQUARE_SIZE + MARGIN))) + ", " + str(int( (y - MARGIN) / (SQUARE_SIZE + MARGIN))))
         columunIndex = int((x - MARGIN) / (SQUARE_SIZE + MARGIN))
-        rowIndex = int((y - MARGIN) / (SQUARE_SIZE + MARGIN))
         
-        currentPlay = logic.switchPlayer()
-        if logic.canPlay(columunIndex):
-            logic.play(columunIndex)
-    
-        
-        
+        if logic.getBoardStatus() != logic.YELLOW_WON and logic.getBoardStatus() != logic.RED_WON:
+            if logic.canPlay(columunIndex):
+                logic.play(columunIndex)
+
+
 def main():
     MyGame(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_TITLE)
     arcade.run()
- 
+
+
 if __name__ == "__main__":
     main()
