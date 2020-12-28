@@ -18,18 +18,18 @@ OFFSET_y = 70
 
 
 def printBoard():
-    for i in range(0, logic.ROW_GRID):
-        for j in range(0, logic.COL_GRID):
-            if logic.board[i][j] == "R":
-                arcade.draw_circle_filled(i * (SQUARE_SIZE + MARGIN) + OFFSET_X, j * (
-                    SQUARE_SIZE + MARGIN) + OFFSET_y, SQUARE_SIZE, arcade.color.RED)
+    for j in range(0, logic.ROW_GRID):
+        for i in range(0, logic.COL_GRID):
+            if logic.board[j][i] == "R":
+                arcade.draw_circle_filled(i * (SQUARE_SIZE + MARGIN) + OFFSET_X, SCREEN_HEIGHT - (j * (
+                    SQUARE_SIZE + MARGIN) + OFFSET_y), SQUARE_SIZE, arcade.color.RED)
 
-            elif logic.board[i][j] == "Y":
-                arcade.draw_circle_filled(i * (SQUARE_SIZE + MARGIN) + OFFSET_X, j * (
-                    SQUARE_SIZE + MARGIN) + OFFSET_y, SQUARE_SIZE, arcade.color.YELLOW)
+            elif logic.board[j][i] == "Y":
+                arcade.draw_circle_filled(i * (SQUARE_SIZE + MARGIN) + OFFSET_X, SCREEN_HEIGHT - (j * (
+                    SQUARE_SIZE + MARGIN) + OFFSET_y), SQUARE_SIZE, arcade.color.YELLOW)
 
-            arcade.draw_circle_outline(i * (SQUARE_SIZE + MARGIN) + OFFSET_X, j * (
-                SQUARE_SIZE + MARGIN) + OFFSET_y, SQUARE_SIZE, arcade.color.BLACK, LINE_WEIGHT)
+            arcade.draw_circle_outline(i * (SQUARE_SIZE + MARGIN) + OFFSET_X, SCREEN_HEIGHT - (j * (
+                SQUARE_SIZE + MARGIN) + OFFSET_y), SQUARE_SIZE, arcade.color.BLACK, LINE_WEIGHT)
 
 
 class MyGame(arcade.Window):
@@ -56,7 +56,7 @@ class MyGame(arcade.Window):
     def on_mouse_press(self, x, y, button, modifiers):
         # Called when the user presses a mouse button.
         columunIndex = int((x - MARGIN) / (SQUARE_SIZE + MARGIN))
-        
+        print(columunIndex)
         if logic.getBoardStatus() != logic.YELLOW_WON and logic.getBoardStatus() != logic.RED_WON:
             if logic.canPlay(columunIndex):
                 logic.play(columunIndex)
